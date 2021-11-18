@@ -12,8 +12,8 @@ int main()
     do
     {
         printf("\n enter number of packets coming at second %d : ", i + 1);
-        scanf("%d", &inp[i]);
-        i++;
+        scanf("%d", &inp[i++]);
+
         printf("\n enter 1 to contiue or 0 to quit..........");
         scanf("%d", &ch);
     } while (ch);
