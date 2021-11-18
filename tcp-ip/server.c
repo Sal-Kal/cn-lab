@@ -26,4 +26,5 @@ int main()
     send(ns, buffer, n, 0);
     close(ns);
     return close(cs);
+    //delete me later
 }
