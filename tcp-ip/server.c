@@ -6,6 +6,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdlib.h>
+#include <arpa/inet.h>
+
 int main()
 {
     int cs, ns, fd, n;
