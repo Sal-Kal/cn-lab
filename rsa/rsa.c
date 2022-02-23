@@ -1,67 +1,48 @@
 #include <stdio.h>
 #include <math.h>
 
-// to find gcd
-int gcd(int a, int h)
+double encrypt(double m, double e, double n)
 {
-    int temp;
-    while (1)
-    {
-        temp = a % h;
-        if (temp == 0)
-            return h;
-        a = h;
-        h = temp;
-    }
+    return fmod(pow(m, e), n);
 }
 
-int main()
+double decrypt(double c, double d, double n)
 {
-    // 2 random prime numbers
-    double p = 3;
-    double q = 7;
-    double n = p * q;
-    double count;
-    double totient = (p - 1) * (q - 1);
+    return fmod(pow(c, d), n);
+}
 
-    // public key
-    // e stands for encrypt
-    double e = 2;
+double gcd(int n1, int n2)
+{
+    if (n2 != 0)
+        return gcd(n2, n1 % n2);
+    else
+        return n1;
+}
 
-    // for checking co-prime which satisfies e>1
-    while (e < totient)
+void main()
+{
+    double p = 3, q = 7, e, d, m, c, r, phi, n, k = 2;
+    phi = (p - 1) * (q - 1);
+    n = p * q;
+
+    e = 2;
+    while (e < phi)
     {
-        count = gcd(e, totient);
-        if (count == 1)
+        if (gcd(e, phi) == 1)
             break;
         else
             e++;
     }
 
-    // private key
-    // d stands for decrypt
-    double d;
+    m = 12;
 
-    // k can be any arbitrary value
-    double k = 2;
+    d = (1 + (k * phi)) / e;
 
-    // choosing d such that it satisfies d*e = 1 + k * totient
-    d = (1 + (k * totient)) / e;
-    double msg = 12;
-    double c = pow(msg, e);
-    double m = pow(c, d);
-    c = fmod(c, n);
-    m = fmod(m, n);
+    c = encrypt(m, e, n);
 
-    printf("Message data = %lf", msg);
-    printf("\np = %lf", p);
-    printf("\nq = %lf", q);
-    printf("\nn = pq = %lf", n);
-    printf("\ntotient = %lf", totient);
-    printf("\ne = %lf", e);
-    printf("\nd = %lf", d);
-    printf("\nEncrypted data = %lf", c);
-    printf("\nOriginal Message Sent = %lf", m);
+    printf("The cipher text is : %f", c);
 
-    return 0;
+    r = decrypt(c, d, n);
+
+    printf("\nThe decrypted message is %f", r);
 }
