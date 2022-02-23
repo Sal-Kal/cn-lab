@@ -9,22 +9,22 @@ int main()
     scanf("%d", &n);
     printf("\nEnter the generator : \n");
     for (i = 0; i <= n; i++)
-        scanf("%d", &g[i]);
+        scanf("%d", &g[i]); // reading the generator till n because polynomic degree
     printf("\nEnter the degree of frame : ");
     scanf("%d", &m);
     printf("Enter the frame : \n");
     for (i = 0; i <= m; i++)
-        scanf("%d", &a[i]);
+        scanf("%d", &a[i]); // reading frame
 
-    if (m < n || (g[0] && g[n]) == 0)
+    if (m < n || (g[0] && g[n]) == 0) // checking if the generator is correct
     {
         printf("Not a proper generator \n");
         exit(0);
     }
     for (i = m + 1; i <= m + n; i++)
-        a[i] = 0;
+        a[i] = 0; // appending the end of the message with 0's for now, later remainder will be appended
     for (j = 0; j <= n; j++)
-        r[j] = a[j];
+        r[j] = a[j]; // initializing r[] till n
     for (i = n; i <= m + n; i++)
     {
         if (i > n)
@@ -45,22 +45,22 @@ int main()
     }
     printf("\nQuotient is : ");
     for (j = 0; j < k; j++)
-        printf("%d ", div[j]);
+        printf("%d ", div[j]); // printing quotient
     printf("\nReminder is : ");
     for (i = 1; i <= n; i++)
-        printf("%d ", r[i]);
+        printf("%d ", r[i]); // printing remainder
     printf("\nTransmitted frame  is : ");
     for (i = m + 1, j = 1; i <= m + n; i++, j++)
-        a[i] = r[j];
+        a[i] = r[j]; // replacing the 0's at the end with the actual remainder
     for (i = 0; i <= m + n; i++)
         printf("%d ", a[i]);
     printf("\n");
 
-    printf("\nEnter the degree of frame : ");
+    printf("\nEnter the degree of frame of recieved frame: ");
     scanf("%d", &m);
     printf("Enter the frame : \n");
     for (i = 0; i <= m; i++)
-        scanf("%d", &a[i]);
+        scanf("%d", &a[i]); // reading the received frame
     for (j = 0; j <= n; j++)
         r[j] = a[j];
     k = 0;
@@ -85,10 +85,10 @@ int main()
     }
     printf("\nQuotient is : ");
     for (j = 0; j < k; j++)
-        printf("%d ", div[j]);
+        printf("%d ", div[j]); // printing quotient of the received data
     printf("\nReminder is : ");
     for (i = 1; i <= n; i++)
-        printf("%d ", r[i]);
+        printf("%d ", r[i]); // printing remainder of received data
     for (i = 1; i <= n; i++)
     {
         if (r[i])
