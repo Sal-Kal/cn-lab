@@ -1,22 +1,98 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define MAX 50
+int queue_hp[MAX];
+int queue_lp[MAX];
+int rear_hp = -1;
+int front_hp = -1;
+int rear_lp = -1;
+int front_lp = -1;
 
-int queue[100], rear = -1, front = 0, size;
+void insert()
+{ // asking user for element to insert and priority
+    int item, prio;
+    printf("Insert the element in queue : ");
+    scanf("%d", &item);
+    printf("Insert the priority (0 for low, 1 for high) : ");
+    scanf("%d", &prio);
+    if (prio == 1)
+    {
+        if (rear_hp == MAX - 1)
+            printf("Queue Overflow \n");
+        else
+        {
+            if (front_hp == -1)
+                front_hp = 0;
+            queue_hp[++rear_hp] = item;
+        }
+    }
+    else
+    {
+        if (rear_lp == MAX - 1)
+            printf("Queue Overflow \n");
+        else
+        {
+            if (front_lp == -1)
+                front_lp = 0;
+            queue_lp[++rear_lp] = item;
+        }
+    }
+}
 
-void insert();
-void display();
-void delete ();
-
-void main()
+void delete ()
 {
-    int choice, i;
-    printf("Enter the size\n");
-    scanf("%d", &size);
-    for (i = 0; i < size; i++)
-        queue[i] = 0;
+    if (front_hp == -1 || front_hp > rear_hp)
+    {
+        if (front_lp == -1 || front_lp > rear_lp)
+        {
+            printf("Queue Underflow \n");
+            return;
+        }
+        else
+        {
+            printf("Element deleted from queue is : %d \n", queue_lp[front_lp++]);
+        }
+        return;
+    }
+    else
+    {
+        printf("Element deleted from queue is : %d \n", queue_hp[front_hp++]);
+    }
+}
+
+void display()
+{
+    int i;
+    printf("High Priority Queue ");
+    if (front_hp == -1 || front_hp > rear_hp)
+        printf("Queue is empty \n");
+    else
+    {
+        printf("Queue is : \n");
+        for (i = front_hp; i <= rear_hp; i++)
+            printf("%d ", queue_hp[i]);
+    }
+    printf("Low Priority Queue ");
+    if (front_lp == -1 || front_lp > rear_lp)
+        printf("Queue is empty \n");
+    else
+    {
+        printf("Queue is : \n");
+        for (i = front_lp; i <= rear_lp; i++)
+            printf("%d ", queue_lp[i]);
+    }
+}
+
+int main()
+{
+    int choice;
     while (1)
     {
-        printf("Enter 1 to insert, 2 to delete, 3 to display and 4 to exit\n");
+        printf("1.Insert element");
+        printf("2.Delete element");
+        printf("3.Display all elements");
+        printf("4.Quit ");
+        printf("Enter your choice : \n ");
         scanf("%d", &choice);
         switch (choice)
         {
@@ -30,64 +106,9 @@ void main()
             display();
             break;
         case 4:
-            exit(0);
+            exit(1);
         default:
-            printf("Entered wrong choice\n");
+            printf("Wrong choice n");
         }
     }
-}
-
-void insert()
-{
-    int value, temp, i;
-    if (rear == size - 1)
-    {
-        printf("queue is full\n");
-        return;
-    }
-    printf("Enter the value to be inserted\n");
-    scanf("%d", &value);
-    if (rear < front)
-    {
-        queue[++rear] = value;
-        return;
-    }
-    for (i = front; i <= rear; i++)
-    {
-        if (queue[i] < value)
-        {
-            temp = queue[i];
-            queue[i] = value;
-            value = temp;
-        }
-    }
-    rear++;
-    queue[rear] = value;
-}
-
-void delete ()
-{
-
-    if (rear < front)
-    {
-        printf("queue is empty\n");
-        return;
-    }
-    printf("%d was deleted\n", queue[front]);
-    front++;
-}
-
-void display()
-{
-    int i;
-    if (rear < front)
-    {
-        printf("queue is empty\n");
-        return;
-    }
-    for (i = front; i < rear + 1; i++)
-    {
-        printf("%d \t", queue[i]);
-    }
-    printf("\n");
 }
